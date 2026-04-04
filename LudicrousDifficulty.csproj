@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>SavageDifficulty</AssemblyName>
-    <Description>Allows buffs to be configured via PluginConfigurator without cheats</Description>
+    <Description>A custom difficulty mod that aims to be harder than Brutal, within reason.</Description>
     <Version>0.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>

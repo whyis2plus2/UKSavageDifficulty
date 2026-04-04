@@ -1,6 +1,6 @@
 {
     "name": "SavageDifficulty",
-    "description": "Allows buffs to be configured via PluginConfigurator without cheats",
+    "description": "A custom difficulty mod that aims to be harder than Brutal, within reason.",
     "author": "whyis2plus2",
     "version_number": "0.1.0",
     "website_url": "https://github.com/whyis2plus2/UKSavageDifficulty/",
