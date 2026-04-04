@@ -1,4 +1,4 @@
-# Ludicrous Difficulty
+# Savage Difficulty
 A custom difficulty mod that aims to be harder than Brutal, within reason.
 
 ## Enemy Changes
