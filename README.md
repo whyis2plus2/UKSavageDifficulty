@@ -12,8 +12,8 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
   * Reload in 3 seconds
 - Earthmover
   * Escape timer is 40 seconds, as opposed to 50 seconds on Brutal
-- Providence
-  * Now create virtue beams
+- Providences
+  * Now create Virtue beams
 
 ## Manual Installation
 1. Download and install [BepInEx](https://thunderstore.io/c/ultrakill/p/BepInEx/BepInExPack/)
