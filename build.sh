@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 PROJECT_NAME="SavageDifficulty"
-VERSION="0.1.0"
+VERSION="0.1.1"
 BUILD_DIR="./out"
 TARGET="whyis2plus2-$PROJECT_NAME-$VERSION.zip"
 

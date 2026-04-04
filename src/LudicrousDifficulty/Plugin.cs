@@ -19,12 +19,13 @@ using Unity;
 using UnityEngine.AddressableAssets;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
+[BepInDependency("Hydraxous.ULTRAKILL.EasyPZ", DependencyFlags.SoftDependency)] // the game crashes w/o this if EasyPZ is enabled
 public class Plugin : BaseUnityPlugin
 {
     // angry level loader does this, and I quite like it
     public const string PLUGIN_GUID = "com.whyis2plus2.SavageDifficulty";
     public const string PLUGIN_NAME = "SavageDifficulty";
-    public const string PLUGIN_VERSION = "0.1.0";
+    public const string PLUGIN_VERSION = "0.1.1";
 
     public const string DIF_NAME = "Savage";
 

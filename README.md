@@ -37,4 +37,4 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
 
 3. run `.\build.bat` or `./build.sh`
 
-The output file will be `whyis2plus2-SavageDifficulty-0.1.0.zip`
+The output file will be `whyis2plus2-SavageDifficulty-0.1.1.zip`
