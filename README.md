@@ -1,0 +1,24 @@
+# Savage Difficulty
+## Installation
+1. Download and install [BepInEx](https://thunderstore.io/c/ultrakill/p/BepInEx/BepInExPack/)
+2. Download this and extract its contents to a folder in BepInEx/plugins
+
+## Building
+#### Build-system dependencies:
+  - [The 7zip command line utility](https://www.7-zip.org)
+  - [dotnet 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+#### Build steps:
+1. Create a folder called "lib" in the root directory of the mod code
+2. Add the following to it:
+  - From BepInEx/core add:
+    * BepInEx.dll
+    * 0Harmony.dll
+  - From ULTRAKILL_Data/Managed add:
+    * Assembly-CSharp.dll
+    * plog.dll
+    * Unity.TextMeshPro.dll
+    * UnityEngine.UI.dll
+
+3. run `.\build.bat` or `./build.sh`
+
+The output file will be `whyis2plus2-SavageDifficulty-0.1.0.zip`

@@ -1,0 +1,9 @@
+lib/*
+bin/*
+obj/*
+out/*
+.vscode/*
+.vs/*
+
+whyis2plus2-SavageDifficulty-*.zip
+*.sln

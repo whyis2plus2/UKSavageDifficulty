@@ -1,0 +1,10 @@
+{
+    "name": "SavageDifficulty",
+    "description": "Allows buffs to be configured via PluginConfigurator without cheats",
+    "author": "whyis2plus2",
+    "version_number": "0.1.0",
+    "website_url": "https://github.com/whyis2plus2/UKSavageDifficulty/",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2305"
+    ]
+}
