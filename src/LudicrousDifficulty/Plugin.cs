@@ -87,7 +87,7 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(Patches.EnemyPatch));
         harmony.PatchAll(typeof(Patches.ProvidencePatch));
         harmony.PatchAll(typeof(Patches.SentryPatch));
-        harmony.PatchAll(typeof(Patches.EarthMoverTimerFix));
+        harmony.PatchAll(typeof(Patches.EarthmoverTimerFix));
 
         logger.LogInfo($"Loaded {PLUGIN_NAME}");
     }

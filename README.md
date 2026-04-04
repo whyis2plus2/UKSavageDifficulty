@@ -1,5 +1,21 @@
-# Savage Difficulty
-## Installation
+# Ludicrous Difficulty
+A custom difficulty mod that aims to be harder than Brutal, within reason.
+
+## Enemy Changes
+### Global Changes
+- 1.2x enemy damage
+- 1.2x enemy speed (except for filth)
+- 1.25x health (for bosses)
+### Per-Enemy Changes
+- Sentries
+  * Now shoot 4 shots, as opposed to 2 on Brutal
+  * Reload in 3 seconds
+- Earthmover
+  * Escape timer is 40 seconds, as opposed to 50 seconds on Brutal
+- Providence
+  * Now create virtue beams
+
+## Manual Installation
 1. Download and install [BepInEx](https://thunderstore.io/c/ultrakill/p/BepInEx/BepInExPack/)
 2. Download this and extract its contents to a folder in BepInEx/plugins
 
@@ -21,4 +37,4 @@
 
 3. run `.\build.bat` or `./build.sh`
 
-The output file will be `whyis2plus2-SavageDifficulty-0.1.0.zip`
+The output file will be `whyis2plus2-LudicrousDifficulty-0.1.0.zip`

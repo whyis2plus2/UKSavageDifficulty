@@ -6,7 +6,7 @@ using System.Reflection;
 using HarmonyLib;
 using TMPro;
 
-public static class EarthMoverTimerFix
+public static class EarthmoverTimerFix
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Countdown), "GetCountdownLength")]
