@@ -199,7 +199,11 @@ public class Plugin : BaseUnityPlugin
         // set the description of difficulty
         difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 
             """
-            mrrp mrroow :3
+            <color=white>Extremely agressive enemies and higher damage than brutal.
+            
+            A full arsenal and extensive knowledge of the game are expected. Every small mistake could be a fatal error.</color>
+
+            <b>Recommended for those who are used to the difficulty of brutal and are looking for a new challenge.</b>
             """;
 
         logger.LogInfo($"Added difficulty Info");
