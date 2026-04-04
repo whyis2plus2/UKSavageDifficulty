@@ -26,8 +26,8 @@ public static class EnemyPatch
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(Enemy), "InitializeDifficulty")]
-    public static bool ForceDifficultyOverride(ref int __result, ref EnemyIdentifier eid)
+    [HarmonyPatch(typeof(EnemyIdentifier), "InitializeDifficulty")]
+    public static bool ForceDifficultyOverride(ref int __result)
     {
         int difficulty = PrefsManager.Instance.GetInt("difficulty");
         if (difficulty != 12) return true;
