@@ -19,10 +19,15 @@ public static class EnemyPatch
         __instance.totalDamageModifier *= 1.2f;
 
         if (__instance.enemyType == EnemyType.Filth) return;
-        __instance.totalSpeedModifier *= 1.2f;
+        __instance.totalSpeedModifier *= __instance.enemyType switch
+        {
+            EnemyType.Filth  => 1f,
+            EnemyType.Stray  => 1.2f,
+            EnemyType.Schism => 1.2f,
+            _ => 1.05f
+        };
 
-        if (!__instance.isBoss) return;
-        __instance.totalHealthModifier *= 1.25f;
+        __instance.totalHealthModifier *= __instance.isBoss? 1.25f : 1.05f;
     }
 
     [HarmonyPrefix]

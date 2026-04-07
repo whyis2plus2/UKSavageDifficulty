@@ -38,7 +38,6 @@ public static class ProvidencePatch
             if (drone.Enemy.EID.enemyType != EnemyType.Providence) continue;
 
             if (!drone.isEnraged) drone.Enrage();
-
             Plugin.instance.logger.LogInfo("Enraging providence");
         }
     }
