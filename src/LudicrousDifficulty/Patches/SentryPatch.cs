@@ -19,7 +19,7 @@ public static class SentryPatch
         int difficulty = PrefsManager.Instance.GetInt("difficulty");
         if (difficulty != 12) return;
 
-        // add 2 extra shots in a row (for a total of 4)
-        ___shotsInARow = -2;
+        // add 1 extra shot in a row (for a total of 3)
+        ___shotsInARow = -1;
     }
 }

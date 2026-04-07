@@ -25,7 +25,7 @@ public class Plugin : BaseUnityPlugin
     // angry level loader does this, and I quite like it
     public const string PLUGIN_GUID = "com.whyis2plus2.SavageDifficulty";
     public const string PLUGIN_NAME = "SavageDifficulty";
-    public const string PLUGIN_VERSION = "0.1.1";
+    public const string PLUGIN_VERSION = "0.1.2";
 
     public const string DIF_NAME = "Savage";
 
@@ -52,6 +52,7 @@ public class Plugin : BaseUnityPlugin
     public GameObject homingProjectile;
     public GameObject providenceProjectile;
     public GameObject virtueInsignia;
+    public GameObject enrageEffect;
 
     static bool addressablesInit = false;
     T LoadAsset<T>(string path)
@@ -74,6 +75,7 @@ public class Plugin : BaseUnityPlugin
         homingProjectile = LoadAsset<GameObject>("Assets/Prefabs/Attacks and Projectiles/Projectile Homing.prefab");
         providenceProjectile = LoadAsset<GameObject>("Assets/Prefabs/Attacks and Projectiles/Projectile Providence.prefab");
         virtueInsignia = LoadAsset<GameObject>("f53d12327d16b8c4cb8c0ddd759db126");
+        enrageEffect = LoadAsset<GameObject>("Assets/Particles/Enemies/RageEffect.prefab");
 
         // load core patches
         harmony.PatchAll(typeof(Patches.PresenceControllerPatch));
