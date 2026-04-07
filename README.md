@@ -3,17 +3,23 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
 
 ## Enemy Changes
 ### Global Changes
-- 1.2x enemy damage
-- 1.2x enemy speed (except for filth)
-- 1.25x health (for bosses)
+- Enemies do 20% more damage than Brutal
+- Enemies are 5% faster than on Brutal (with some exceptions)
+- Bosses have 25% more health than on Brutal
+- Regular enemies have 5% more health than on Brutal
 ### Per-Enemy Changes
-- Sentries
+- Filth
+  * Do not have different speed than Brutal
+- Stray/Schism
+  * Have a 20% speed boost as opposed to 5% like other enemies
+- Sentry
   * Now shoot 4 shots, as opposed to 2 on Brutal
   * Reload in 3 seconds
 - Earthmover
   * Escape timer is 40 seconds, as opposed to 50 seconds on Brutal
-- Providences
-  * Now create Virtue beams
+- Providence
+  * Now enrage when another Providence dies
+  * Now create Virtue beams when enraged
 
 ## Manual Installation
 1. Download and install [BepInEx](https://thunderstore.io/c/ultrakill/p/BepInEx/BepInExPack/)
