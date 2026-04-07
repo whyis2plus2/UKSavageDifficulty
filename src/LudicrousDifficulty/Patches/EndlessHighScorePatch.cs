@@ -9,7 +9,7 @@ public static class EndlessHighScorePatch
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(EndlessHighScore), "OnEnable")]
-    public static bool EndlessHighScore_OnEnable_Patch()
+    public static bool EndlessHighScore_OnEnable_Prefix()
     {
         return PrefsManager.Instance.GetInt("difficulty") <= 5;
     }
