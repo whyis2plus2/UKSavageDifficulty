@@ -13,7 +13,7 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
 - Stray/Schism
   * Have a 20% speed boost as opposed to 5% like other enemies
 - Sentry
-  * Now shoot 4 shots, as opposed to 2 on Brutal
+  * Now shoot 3 shots, as opposed to 2 on Brutal
   * Reload in 3 seconds
 - Earthmover
   * Escape timer is 40 seconds, as opposed to 50 seconds on Brutal

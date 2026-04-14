@@ -11,6 +11,7 @@ if not exist "%buildDir%\" (
 
 copy /y ".\bin\Debug\netstandard2.1\%projectName%.dll" "%buildDir%"
 copy /y ".\bin\Debug\netstandard2.1\%projectName%.pdb" "%buildDir%"
+copy /y ".\CHANGELOG.md" "%buildDir%"
 copy /y ".\README.md" "%buildDir%"
 copy /y ".\LICENSE" "%buildDir%"
 copy /y ".\icon.png" "%buildDir%"

@@ -8,6 +8,7 @@ mkdir -p $BUILD_DIR
 dotnet build
 cp ./bin/Debug/netstandard2.1/$PROJECT_NAME.dll $BUILD_DIR
 cp ./bin/Debug/netstandard2.1/$PROJECT_NAME.pdb $BUILD_DIR
+cp ./CHANGELOG.md ./out
 cp ./README.md ./out
 cp ./LICENSE ./out
 cp ./icon.png ./out
