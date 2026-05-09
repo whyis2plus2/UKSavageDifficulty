@@ -3,23 +3,106 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
 
 ## Enemy Changes
 ### Global Changes
-- Enemies do 20% more damage than Brutal
-- Enemies are 5% faster than on Brutal (with some exceptions)
-- Bosses have 25% more health than on Brutal
-- Regular enemies have 5% more health than on Brutal
+<details>
+    <ul>
+        <li>Enemies do 20% more damage than Brutal</li>
+        <li>Enemies are 5% faster than on Brutal (with some exceptions)</li>
+        <li>Bosses have 25% more health than on Brutal</li>
+        <li>Regular enemies have 5% more health than on Brutal</li>
+    </ul>
+</details>
+
 ### Per-Enemy Changes
-- Filth
-  * Do not have different speed than Brutal
-- Stray/Schism
-  * Have a 20% speed boost as opposed to 5% like other enemies
-- Sentry
-  * Now shoot 3 shots, as opposed to 2 on Brutal
-  * Reload in 3 seconds
-- Earthmover
-  * Escape timer is 40 seconds, as opposed to 50 seconds on Brutal
-- Providence
-  * Now enrage when another Providence dies
-  * Now create Virtue beams when enraged
+<details>
+    <summary>Husks</summary>
+    <br>
+    <ul>
+        <li>
+            <details>
+                <summary>Filth</summary>
+                <br>
+                <ul>
+                    <li>Do not have boosted speed compared to brutal</li>
+                </ul>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary>Stray</summary>
+                <br>
+                <ul>
+                    <li>Have a 20% speed boost as opposed to the base 5%</li>
+                </ul>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary>Schism</summary>
+                <br>
+                <ul>
+                    <li>Have a 20% speed boost as opposed to the base 5%</li>
+                </ul>
+            </details>
+        </li>
+    </ul>
+</details>
+<br>
+<details>
+    <summary>Machines</summary>
+    <br>
+    <ul>
+        <li>
+            <details>
+                <summary>Sentry</summary>
+                <br>
+                <ul>
+                    <li>Shoot 3 shots</li>
+                    <li>Reload in 3 seconds</li>
+                </ul>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary>Earthmover</summary>
+                <br>
+                <ul>
+                    <li>Escape timer is 40 seconds (10 shorter than on Brutal)</li>
+                </ul>
+            </details>
+        </li>
+    </ul>
+</details>
+<details>
+    <summary>Angels</summary>
+    <br>
+    <ul>
+        <li>
+            <details>
+                <summary>Providence</summary>
+                <br>
+                <ul>
+                    <li>Enrages when another Providence dies nearby</li>
+                    <li>Shoots Virtue beams when enraged</li>
+                </ul>
+            </details>
+        </li>
+    </ul>
+</details>
+<details>
+    <summary>Others</summary>
+    <br>
+    <ul>
+        <li>
+            <details>
+                <summary>Sisyphus Prime</summary>
+                <br>
+                <ul>
+                    <li>"This will hurt" and "Destroy" are the only parriable attacks in phase 2</li>
+                </ul>
+            </details>
+        </li>
+    </ul>
+</details>
 
 ## Manual Installation
 1. Download and install [BepInEx](https://thunderstore.io/c/ultrakill/p/BepInEx/BepInExPack/)

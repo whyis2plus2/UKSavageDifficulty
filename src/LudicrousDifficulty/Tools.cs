@@ -10,6 +10,12 @@ using UnityEngine.EventSystems;
 
 public static class Tools
 {
+    public static int difficulty
+    {
+        set => PrefsManager.Instance.SetInt("difficulty", value);
+        get => PrefsManager.Instance.GetInt("difficulty", -1);
+    }
+
     public static EventTrigger.Entry CreateTriggerEntry(EventTriggerType id, UnityAction<BaseEventData> call)
     {
         EventTrigger.Entry ret = new() { eventID = id };

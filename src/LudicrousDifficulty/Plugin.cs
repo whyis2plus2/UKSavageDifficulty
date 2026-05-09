@@ -25,7 +25,7 @@ public class Plugin : BaseUnityPlugin
     // angry level loader does this, and I quite like it
     public const string PLUGIN_GUID = "com.whyis2plus2.SavageDifficulty";
     public const string PLUGIN_NAME = "SavageDifficulty";
-    public const string PLUGIN_VERSION = "0.1.2";
+    public const string PLUGIN_VERSION = "0.2.0";
 
     public const string DIF_NAME = "Savage";
 
@@ -84,13 +84,14 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(Patches.RankDataPatch));
         harmony.PatchAll(typeof(Patches.GameProgressSaverPatch));
         harmony.PatchAll(typeof(Patches.LevelSelectPanelPatch));
-        harmony.PatchAll(typeof(Patches.EndlessHighScorePatch));
 
         // load enemy patches
         harmony.PatchAll(typeof(Patches.EnemyPatch));
         harmony.PatchAll(typeof(Patches.ProvidencePatch));
         harmony.PatchAll(typeof(Patches.SentryPatch));
         harmony.PatchAll(typeof(Patches.EarthmoverTimerFix));
+        harmony.PatchAll(typeof(Patches.SisyphusPrimePatch));
+
 
         logger.LogInfo($"Loaded {PLUGIN_NAME}");
     }

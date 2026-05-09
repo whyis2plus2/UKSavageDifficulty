@@ -1,3 +1,6 @@
+# 0.2.0
+- Made "Destroy!" and "This will hurt!" the only parriable attacks in Sisyphus Primes's second phase.
+
 # 0.1.2 - Retune
 - Changed the speed buff from 20% to 5% for all enemies except Strays and Schisms
 - Providences now enrage when another providence dies nearby

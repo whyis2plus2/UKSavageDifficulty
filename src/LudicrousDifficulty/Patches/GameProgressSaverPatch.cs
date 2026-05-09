@@ -1,15 +1,19 @@
 namespace SavageDifficulty.Patches;
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 
 public static class GameProgressSaverPatch
 {
-    static MethodInfo GetGameProgressMethodInfoA = typeof(GameProgressSaver).GetMethod(name: "GetGameProgress", bindingAttr: BindingFlags.Static | BindingFlags.NonPublic, types: [typeof(int)], binder: null, modifiers: null);
+    static MethodInfo methodInfo_GetGameProgress = typeof(GameProgressSaver).GetMethod(name: "GetGameProgress", bindingAttr: BindingFlags.Static | BindingFlags.NonPublic, types: [typeof(int)], binder: null, modifiers: null);
     static GameProgressData GetGameProgress(int difficulty = -1) =>
-        (GameProgressData)GetGameProgressMethodInfoA.Invoke(null, [difficulty]);
+        (GameProgressData)methodInfo_GetGameProgress.Invoke(null, [difficulty]);
+
+    static MethodInfo methodInfo_ReadFile = typeof(GameProgressSaver).GetMethod(name: "ReadFile", bindingAttr: BindingFlags.Static | BindingFlags.NonPublic, types: [typeof(string)], binder: null, modifiers: null);
+    static object ReadFile(string path) => methodInfo_ReadFile.Invoke(null, [path]);
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(GameProgressSaver), "GetProgress")]
@@ -76,5 +80,54 @@ public static class GameProgressSaverPatch
 
         __result = levelNum;
         return false; // skip original method
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(GameProgressSaver), "GetCyberRankData")]
+    public static bool GameProgressSaver_GetCyberRankData_Prefix(ref CyberRankData __result)
+    {
+        var cgHighScorePath = Path.Combine(GameProgressSaver.SavePath, "cybergrindhighscore.bepis");
+        var cgRankData = (CyberRankData)ReadFile(cgHighScorePath);
+
+        if (cgRankData == null) cgRankData = new();
+
+        if (cgRankData.preciseWavesByDifficulty == null)
+        {
+            cgRankData.preciseWavesByDifficulty = new float[13];
+        }
+        else if (cgRankData.preciseWavesByDifficulty.Length < 13)
+        {
+           Array.Resize(ref cgRankData.preciseWavesByDifficulty, 13);
+        }
+
+        if (cgRankData.style == null)
+        {
+            cgRankData.style = new int[13];
+        }
+        else if (cgRankData.style.Length < 13)
+        {
+           Array.Resize(ref cgRankData.style, 13);
+        }
+
+        if (cgRankData.kills == null)
+        {
+            cgRankData.kills = new int[13];
+        }
+        else if (cgRankData.kills.Length < 13)
+        {
+           Array.Resize(ref cgRankData.kills, 13);
+        }
+
+        if (cgRankData.time == null)
+        {
+            cgRankData.time = new float[13];
+        }
+        else if (cgRankData.time.Length < 13)
+        {
+           Array.Resize(ref cgRankData.time, 13);
+        }
+
+        __result = cgRankData;
+        return false;
     }
 }
