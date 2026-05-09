@@ -14,62 +14,94 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
 
 ### Per-Enemy Changes
 <details>
-    <details>
+    <ul>
+        <li>
+        <details>
         <summary>Husks</summary>
-        <details>
-            <summary>Filth</summary>
             <ul>
-                <li>Do not have boosted speed compared to Brutal</li>
+                <li>
+                <details>
+                <summary>Filth</summary>
+                    <ul>
+                        <li>Do not have boosted speed compared to Brutal</li>
+                    </ul>
+                </details>
+                </li>
+                <li>
+                <details>
+                <summary>Stray</summary>
+                    <ul>
+                        <li>Have a 20% speed boost as opposed to the base 5%</li>
+                    </ul>
+                </details>
+                </li>
+                <li>
+                <details>
+                <summary>Schism</summary>
+                    <ul>
+                        <li>Have a 20% speed boost as opposed to the base 5%</li>
+                    </ul>
+                </details>
+                </li>
             </ul>
         </details>
+        </li>
+        <li>
         <details>
-            <summary>Stray</summary>
+            <summary>Machines</summary>
+                <ul>
+                    <li>
+                    <details>
+                    <summary>Sentry</summary>
+                        <ul>
+                            <li>Shoot 3 shots between reloads (as opposed to 2 on Brutal)</li>
+                            <li>Reload in 3 seconds</li>
+                        </ul>
+                    </details>
+                    </li>
+                    <li>
+                    <details>
+                    <summary>Earthmover</summary>
+                        <ul>
+                            <li>Escape timer is 40 seconds (10 shorter than on Brutal)</li>
+                        </ul>
+                    </details>
+                    </li>
+                </ul>
+        </details>
+        </li>
+        <li>
+        <details>
+            <summary>Angels</summary>
+                <ul>
+                    <li>
+                    <details>
+                    <summary>Providence</summary>
+                        <ul>
+                            <li>Enrages when another Providence dies nearby</li>
+                            <li>Shoots Virtue beams when enraged</li>
+                        </ul>
+                    </details>
+                    </li>
+                </ul>
+        </details>
+        </li>
+        <li>
+        <details>
+            <summary>Others</summary>
             <ul>
-                <li>Have a 20% speed boost as opposed to the base 5%</li>
+                <li>
+                <details>
+                    <summary>Sisyphus Prime</summary>
+                    <ul>
+                        <li>"This will hurt" and "Destroy" are the only parriable attacks in phase 2</li>
+                    </ul>
+                </details>
+                </li>
             </ul>
         </details>
-        <details>
-            <summary>Schism</summary>
-            <ul>
-                <li>Have a 20% speed boost as opposed to the base 5%</li>
-            </ul>
-        </details>
-    </details>
-    <details>
-        <summary>Machines</summary>
-        <details>
-            <summary>Sentry</summary>
-            <ul>
-                <li>Shoot 3 shots between reloads (as opposed to 2 on Brutal)</li>
-                <li>Reload in 3 seconds</li>
-            </ul>
-        </details>
-        <details>
-            <summary>Earthmover</summary>
-            <ul>
-                <li>Escape timer is 40 seconds (10 shorter than on Brutal)</li>
-            </ul>
-        </details>
-    </details>
-    <details>
-        <summary>Angels</summary>
-        <details>
-            <summary>Providence</summary>
-            <ul>
-                <li>Enrages when another Providence dies nearby</li>
-                <li>Shoots Virtue beams when enraged</li>
-            </ul>
-        </details>
-    </details>
-    <details>
-        <summary>Others</summary>
-        <details>
-            <summary>Sisyphus Prime</summary>
-            <ul>
-                <li>"This will hurt" and "Destroy" are the only parriable attacks in phase 2</li>
-            </ul>
-        </details>
-    </details>
+        </li>
+    </ul>
 </details>
 
 ## Manual Installation
