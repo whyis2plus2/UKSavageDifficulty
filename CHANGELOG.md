@@ -1,4 +1,4 @@
-# 0.2.0
+# 2026.5.9
 - Made "Destroy!" and "This will hurt!" the only parriable attacks in Sisyphus Primes's second phase.
 - CG High scores are now saved
 - Changed the website link (in manifest.json) from the github repo to the gitlab repo
