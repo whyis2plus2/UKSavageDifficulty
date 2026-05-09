@@ -16,10 +16,33 @@ public static class ProvidencePatch
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Drone), "Enrage")]
-    public static void ScaleCurrentEnrageEffect(ref Drone __instance, ref EnemyIdentifier ___eid)
+    public static void Providence_Enrage_Postfix(ref Drone __instance, ref EnemyIdentifier ___eid)
     {
         if (___eid.enemyType != EnemyType.Providence) return;
         __instance.currentEnrageEffect.transform.localScale *= 4;
+
+        var provGameObject = __instance.transform.Find("Providence").gameObject;
+        if (provGameObject == null) return;
+
+        var primaryWings = provGameObject.transform.Find("Primary Wings").gameObject;
+        if (primaryWings == null) return;
+        primaryWings.GetComponent<SkinnedMeshRenderer>().material.color = new(1f, 0f, 0f);
+
+        var secondaryWings = provGameObject.transform.Find("SecondaryWings").gameObject;
+        if (secondaryWings == null) return;
+        secondaryWings.GetComponent<SkinnedMeshRenderer>().material.color = new(1f, 0.5f, 0f);
+
+        var bigRainbow = provGameObject.transform.Find("Rainbow_Large").gameObject;
+        if (!bigRainbow) return;
+        bigRainbow.SetActive(false);
+
+        var smallRainbow = provGameObject.transform.Find("Rainbow_Small").gameObject;
+        if (!smallRainbow) return;
+        smallRainbow.SetActive(false);
+
+        var backLight = provGameObject.transform.Find("Plane").gameObject;
+        if (!backLight) return;
+        backLight.GetComponent<MeshRenderer>().material.color = new(1f, 0.5f, 0f);
     }
 
     [HarmonyPrefix]

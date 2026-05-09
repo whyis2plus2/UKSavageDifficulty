@@ -1,3 +1,7 @@
+# 2026.5.9.3
+- Made providences less ugly
+- Fixed README so that enemy descriptions were properly indented outside of gitlab
+
 # 2026.5.9
 - Made "Destroy!" and "This will hurt!" the only parriable attacks in Sisyphus Primes's second phase.
 - CG High scores are now saved
