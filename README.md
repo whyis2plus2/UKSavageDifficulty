@@ -82,4 +82,4 @@ A custom difficulty mod that aims to be harder than Brutal, within reason.
   - [dotnet 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 
 run `.\build.bat` or `./build.sh`
-The output file will be `whyis2plus2-SavageDifficulty-0.1.2.zip`
+The output file will be `whyis2plus2-SavageDifficulty-2026.5.9.zip`
