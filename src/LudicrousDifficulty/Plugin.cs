@@ -26,7 +26,7 @@ public class Plugin : BaseUnityPlugin
     // angry level loader does this, and I quite like it
     public const string PLUGIN_GUID = "com.whyis2plus2.SavageDifficulty";
     public const string PLUGIN_NAME = "SavageDifficulty";
-    public const string PLUGIN_VERSION = "0.2.0";
+    public const string PLUGIN_VERSION = "2026.05.09";
 
     public const string DIF_NAME = "SAVAGE";
     public const int    DIF_VAL  = 12;

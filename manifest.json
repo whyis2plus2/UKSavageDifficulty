@@ -2,7 +2,7 @@
     "name": "SavageDifficulty",
     "description": "My take on UKMD",
     "author": "whyis2plus2",
-    "version_number": "0.2.0",
+    "version_number": "2026.05.09",
     "website_url": "https://gitlab.com/whyis2plus2/UKSavageDifficulty/",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2305"
