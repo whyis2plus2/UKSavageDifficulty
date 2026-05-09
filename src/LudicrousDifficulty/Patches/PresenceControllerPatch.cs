@@ -11,14 +11,14 @@ public static class PresenceControllerPatch
     [HarmonyPatch(typeof(PresenceController), "Start")]
     public static void PresenceController_Start_Postfix(ref PresenceController __instance)
     {
-        if (__instance.diffNames.Length < 13)
+        if (__instance.diffNames.Length < Plugin.DIF_VAL + 1)
         {
-            var newArray = new string[13];
+            var newArray = new string[Plugin.DIF_VAL + 1];
 
             for (int i = 0; i < __instance.diffNames.Length; ++i)
                 newArray[i] = __instance.diffNames[i];
 
-            newArray[12] = Plugin.DIF_NAME.ToUpper();
+            newArray[Plugin.DIF_VAL] = Plugin.DIF_NAME.ToUpper();
             __instance.diffNames = newArray;
         }
     }

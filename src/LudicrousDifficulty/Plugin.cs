@@ -20,6 +20,7 @@ using UnityEngine.AddressableAssets;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
 [BepInDependency("Hydraxous.ULTRAKILL.EasyPZ", DependencyFlags.SoftDependency)] // the game crashes w/o this if EasyPZ is enabled
+[BepInDependency(AngryLevelLoader.Plugin.PLUGIN_GUID, DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     // angry level loader does this, and I quite like it
@@ -27,7 +28,8 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_NAME = "SavageDifficulty";
     public const string PLUGIN_VERSION = "0.2.0";
 
-    public const string DIF_NAME = "Savage";
+    public const string DIF_NAME = "SAVAGE";
+    public const int    DIF_VAL  = 12;
 
     /// <summary> The current instance of the plugin, accessable by all parts of the code </summary>
     public static Plugin instance;
@@ -92,6 +94,8 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(Patches.EarthmoverTimerFix));
         harmony.PatchAll(typeof(Patches.SisyphusPrimePatch));
 
+        // handle compat
+        Compat.Angry.Init();
 
         logger.LogInfo($"Loaded {PLUGIN_NAME}");
     }
@@ -203,11 +207,11 @@ public class Plugin : BaseUnityPlugin
         // set the description of difficulty
         difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 
             """
-            <color=white>Extremely agressive enemies and higher damage than brutal.
+            <color=white>Extremely agressive enemies and higher damage.
             
             A full arsenal and extensive knowledge of the game are expected. Every small mistake could be a fatal error.</color>
 
-            <b>Recommended for those who are used to the difficulty of brutal and are looking for a new challenge.</b>
+            <b>Recommended for those who are used to the difficulty of Brutal and are looking for a new challenge.</b>
             """;
 
         logger.LogInfo($"Added difficulty Info");

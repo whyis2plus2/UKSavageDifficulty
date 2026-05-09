@@ -11,7 +11,6 @@ class RankDataPatch
     [HarmonyPatch(typeof(RankData), MethodType.Constructor, [typeof(StatsManager)])]
     public static bool RankData_Ctor_Prefix(ref RankData __instance, ref StatsManager sman)
     {
-        int @int = MonoSingleton<PrefsManager>.Instance.GetInt("difficulty", 0);
         __instance.levelNumber = sman.levelNumber;
         RankData rank = GameProgressSaver.GetRank(true, -1);
         if (rank != null)
@@ -23,7 +22,7 @@ class RankDataPatch
             }
             else
             {
-                __instance.majorAssists = new bool[13];
+                __instance.majorAssists = new bool[Plugin.DIF_VAL + 1];
             }
             if (rank.stats != null)
             {
@@ -31,80 +30,28 @@ class RankDataPatch
             }
             else
             {
-                __instance.stats = new RankScoreData[13];
+                __instance.stats = new RankScoreData[Plugin.DIF_VAL + 1];
             }
 
-            if (__instance.majorAssists.Length < 13)
-            {
-                var newArray = new bool[13];
-                for (int i = 0; i < 13; ++i)
-                {
-                    if (i < __instance.majorAssists.Length) newArray[i] = __instance.majorAssists[i];
-                    else newArray[i] = false;
-                }
-                __instance.majorAssists = newArray;
-            }
-            if (__instance.ranks.Length < 13)
-            {
-                var newArray = new int[13];
-                for (int i = 0; i < 13; ++i)
-                {
-                    if (i < __instance.ranks.Length) newArray[i] = __instance.ranks[i];
-                    else newArray[i] = -1;
-                }
-                __instance.ranks = newArray;
-            }
-            if (__instance.stats.Length < 13)
-            {
-                var newArray = new RankScoreData[13];
-                for (int i = 0; i < __instance.stats.Length; ++i)
-                {
-                    newArray[i] = __instance.stats[i];
-                }
-                __instance.stats = newArray;
-            }
+            if (__instance.majorAssists.Length < Plugin.DIF_VAL + 1) Array.Resize(ref __instance.majorAssists, Plugin.DIF_VAL + 1);
+            if (__instance.ranks.Length < Plugin.DIF_VAL + 1) Array.Resize(ref __instance.ranks, Plugin.DIF_VAL + 1);
+            if (__instance.stats.Length < Plugin.DIF_VAL + 1) Array.Resize(ref __instance.stats, Plugin.DIF_VAL + 1);
 
-            if (rank.majorAssists.Length < 13)
-            {
-                var newArray = new bool[13];
-                for (int i = 0; i < 13; ++i)
-                {
-                    if (i < rank.majorAssists.Length) newArray[i] = rank.majorAssists[i];
-                    else newArray[i] = false;
-                }
-                rank.majorAssists = newArray;
-            }
-            if (rank.ranks.Length < 13)
-            {
-                var newArray = new int[13];
-                for (int i = 0; i < 13; ++i)
-                {
-                    if (i < rank.ranks.Length) newArray[i] = rank.ranks[i];
-                    else newArray[i] = -1;
-                }
-                rank.ranks = newArray;
-            }
-            if (rank.stats.Length < 13)
-            {
-                var newArray = new RankScoreData[13];
-                for (int i = 0; i < rank.stats.Length; ++i)
-                {
-                    newArray[i] = rank.stats[i];
-                }
-                rank.stats = newArray;
-            }
+            if (rank.majorAssists.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.majorAssists, Plugin.DIF_VAL + 1);
+            if (rank.ranks.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.ranks, Plugin.DIF_VAL + 1);
+            if (rank.stats.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.stats, Plugin.DIF_VAL + 1);
 
-            if ((sman.rankScore >= rank.ranks[@int] && (rank.majorAssists == null || (!sman.majorUsed && rank.majorAssists[@int]))) || sman.rankScore > rank.ranks[@int] || rank.levelNumber != __instance.levelNumber)
+            if ((sman.rankScore >= rank.ranks[Tools.difficulty] && (rank.majorAssists == null || (!sman.majorUsed && rank.majorAssists[Tools.difficulty]))) || sman.rankScore > rank.ranks[Tools.difficulty] || rank.levelNumber != __instance.levelNumber)
             {
-                __instance.majorAssists[@int] = sman.majorUsed;
-                __instance.ranks[@int] = sman.rankScore;
-                if (__instance.stats[@int] == null)
+                __instance.majorAssists[Tools.difficulty] = sman.majorUsed;
+                __instance.ranks[Tools.difficulty] = sman.rankScore;
+                if (__instance.stats[Tools.difficulty] == null)
                 {
-                    __instance.stats[@int] = new RankScoreData();
+                    __instance.stats[Tools.difficulty] = new RankScoreData();
                 }
-                __instance.stats[@int].kills = sman.kills;
-                __instance.stats[@int].style = sman.stylePoints;
-                __instance.stats[@int].time = sman.seconds;
+                __instance.stats[Tools.difficulty].kills = sman.kills;
+                __instance.stats[Tools.difficulty].style = sman.stylePoints;
+                __instance.stats[Tools.difficulty].time = sman.seconds;
             }
             __instance.secretsAmount = sman.secretObjects.Length;
             __instance.secretsFound = new bool[__instance.secretsAmount];
@@ -120,22 +67,22 @@ class RankDataPatch
             __instance.challenge = rank.challenge;
             return false;
         }
-        __instance.ranks = new int[13];
-        __instance.stats = new RankScoreData[13];
-        if (__instance.stats[@int] == null)
+        __instance.ranks = new int[Plugin.DIF_VAL + 1];
+        __instance.stats = new RankScoreData[Plugin.DIF_VAL + 1];
+        if (__instance.stats[Tools.difficulty] == null)
         {
-            __instance.stats[@int] = new RankScoreData();
+            __instance.stats[Tools.difficulty] = new RankScoreData();
         }
-        __instance.majorAssists = new bool[13];
+        __instance.majorAssists = new bool[Plugin.DIF_VAL + 1];
         for (int i = 0; i < __instance.ranks.Length; i++)
         {
             __instance.ranks[i] = -1;
         }
-        __instance.ranks[@int] = sman.rankScore;
-        __instance.majorAssists[@int] = sman.majorUsed;
-        __instance.stats[@int].kills = sman.kills;
-        __instance.stats[@int].style = sman.stylePoints;
-        __instance.stats[@int].time = sman.seconds;
+        __instance.ranks[Tools.difficulty] = sman.rankScore;
+        __instance.majorAssists[Tools.difficulty] = sman.majorUsed;
+        __instance.stats[Tools.difficulty].kills = sman.kills;
+        __instance.stats[Tools.difficulty].style = sman.stylePoints;
+        __instance.stats[Tools.difficulty].time = sman.seconds;
         __instance.secretsAmount = sman.secretObjects.Length;
         __instance.secretsFound = new bool[__instance.secretsAmount];
         for (int j = 0; j < __instance.secretsAmount; j++)

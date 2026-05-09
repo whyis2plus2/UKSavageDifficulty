@@ -12,8 +12,7 @@ public static class EarthmoverTimerFix
     [HarmonyPatch(typeof(Countdown), "GetCountdownLength")]
     public static bool Coundown_GetCountdownLength_Prefix(ref float __result)
     {
-        int difficulty = PrefsManager.Instance.GetInt("difficulty");
-        if (difficulty != 12) return true;
+        if (Tools.difficulty != Plugin.DIF_VAL) return true;
 
         __result = 40f;
         return false;

@@ -20,7 +20,7 @@ public static class GameProgressSaverPatch
     public static bool GameProgressSaver_GetProgress_Prefix(ref int __result, ref int difficulty)
     {
         int levelNum = 1;
-        for (int i = difficulty; i < 13; ++i)
+        for (int i = difficulty; i < Plugin.DIF_VAL + 1; ++i)
         {
             var progress = GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.levelNum > levelNum)
@@ -38,7 +38,7 @@ public static class GameProgressSaverPatch
     public static bool GameProgressSaver_GetEncoreProgress_Prefix(ref int __result, ref int difficulty)
     {
         int levelNum = 0;
-        for (int i = difficulty; i < 13; ++i)
+        for (int i = difficulty; i < Plugin.DIF_VAL + 1; ++i)
         {
             var progress = GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.encores > levelNum)
@@ -63,7 +63,7 @@ public static class GameProgressSaverPatch
 
         --level;
         int levelNum = 0;
-        for (int i = difficulty; i < 13; ++i)
+        for (int i = difficulty; i < Plugin.DIF_VAL + 1; ++i)
         {
             var progress = GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.primeLevels != null && progress.primeLevels.Length > level && progress.primeLevels[level] > levelNum)
@@ -93,38 +93,38 @@ public static class GameProgressSaverPatch
 
         if (cgRankData.preciseWavesByDifficulty == null)
         {
-            cgRankData.preciseWavesByDifficulty = new float[13];
+            cgRankData.preciseWavesByDifficulty = new float[Plugin.DIF_VAL + 1];
         }
-        else if (cgRankData.preciseWavesByDifficulty.Length < 13)
+        else if (cgRankData.preciseWavesByDifficulty.Length < Plugin.DIF_VAL + 1)
         {
-           Array.Resize(ref cgRankData.preciseWavesByDifficulty, 13);
+           Array.Resize(ref cgRankData.preciseWavesByDifficulty, Plugin.DIF_VAL + 1);
         }
 
         if (cgRankData.style == null)
         {
-            cgRankData.style = new int[13];
+            cgRankData.style = new int[Plugin.DIF_VAL + 1];
         }
-        else if (cgRankData.style.Length < 13)
+        else if (cgRankData.style.Length < Plugin.DIF_VAL + 1)
         {
-           Array.Resize(ref cgRankData.style, 13);
+           Array.Resize(ref cgRankData.style, Plugin.DIF_VAL + 1);
         }
 
         if (cgRankData.kills == null)
         {
-            cgRankData.kills = new int[13];
+            cgRankData.kills = new int[Plugin.DIF_VAL + 1];
         }
-        else if (cgRankData.kills.Length < 13)
+        else if (cgRankData.kills.Length < Plugin.DIF_VAL + 1)
         {
-           Array.Resize(ref cgRankData.kills, 13);
+           Array.Resize(ref cgRankData.kills, Plugin.DIF_VAL + 1);
         }
 
         if (cgRankData.time == null)
         {
-            cgRankData.time = new float[13];
+            cgRankData.time = new float[Plugin.DIF_VAL + 1];
         }
-        else if (cgRankData.time.Length < 13)
+        else if (cgRankData.time.Length < Plugin.DIF_VAL + 1)
         {
-           Array.Resize(ref cgRankData.time, 13);
+           Array.Resize(ref cgRankData.time, Plugin.DIF_VAL + 1);
         }
 
         __result = cgRankData;

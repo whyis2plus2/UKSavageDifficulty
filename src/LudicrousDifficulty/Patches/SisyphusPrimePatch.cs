@@ -13,6 +13,7 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "Start")]
     public static void SisyphusPrime_Start_Postfix(ref SisyphusPrime __instance)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
         everySisyphus.Add(new(__instance, false));
     }
 
@@ -20,6 +21,8 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "Death")]
     public static void SisyphusPrime_Death_Postfix(ref SisyphusPrime __instance)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
+
         int i;
         for (i = 0; i < everySisyphus.Count; ++i)
         {
@@ -34,6 +37,8 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "PickPrimaryAttack", [typeof(int)])]
     public static void SisyphusPrime_PickPrimaryAttack_Prefix(ref SisyphusPrime __instance, ref bool ___enraged)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
+
         foreach (var sisy in everySisyphus)
         {
             if (sisy.first != __instance) continue;
@@ -46,6 +51,8 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "PickSecondaryAttack", [typeof(int)])]
     public static void SisyphusPrime_PickSecondaryAttack_Prefix(ref SisyphusPrime __instance, ref bool ___enraged)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
+
         foreach (var sisy in everySisyphus)
         {
             if (sisy.first != __instance) continue;
@@ -59,6 +66,8 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "StompCombo")]
     public static void SisyphusPrime_StompCombo_Prefix(ref SisyphusPrime __instance, ref bool ___enraged)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
+
         foreach (var sisy in everySisyphus)
         {
             if (sisy.first != __instance) continue;
@@ -78,6 +87,8 @@ public static class SisyphusPrimePatch
             ref Enemy ___mach
     )
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return true;
+
         if (!___enraged)
         {
             ___mach.parryable = true;

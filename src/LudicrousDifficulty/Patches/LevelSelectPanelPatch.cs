@@ -117,35 +117,9 @@ public static class LevelSelectPanelPatch
         }
         RankData rank = GameProgressSaver.GetRank(num, false);
 
-        if (rank.majorAssists.Length < 13)
-        {
-            var newArray = new bool[13];
-            for (int i = 0; i < 13; ++i)
-            {
-                if (i < rank.majorAssists.Length) newArray[i] = rank.majorAssists[i];
-                else newArray[i] = false;
-            }
-            rank.majorAssists = newArray;
-        }
-        if (rank.ranks.Length < 13)
-        {
-            var newArray = new int[13];
-            for (int i = 0; i < 13; ++i)
-            {
-                if (i < rank.ranks.Length) newArray[i] = rank.ranks[i];
-                else newArray[i] = -1;
-            }
-            rank.ranks = newArray;
-        }
-        if (rank.stats.Length < 13)
-        {
-            var newArray = new RankScoreData[13];
-            for (int i = 0; i < rank.stats.Length; ++i)
-            {
-                newArray[i] = rank.stats[i];
-            }
-            rank.stats = newArray;
-        }
+        if (rank.majorAssists.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.majorAssists, Plugin.DIF_VAL + 1);
+        if (rank.ranks.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.ranks, Plugin.DIF_VAL + 1);
+        if (rank.stats.Length < Plugin.DIF_VAL + 1) Array.Resize(ref rank.stats, Plugin.DIF_VAL + 1);
 
         if (rank == null)
         {
@@ -162,11 +136,11 @@ public static class LevelSelectPanelPatch
             }
             return false;
         }
-        int @int = MonoSingleton<PrefsManager>.Instance.GetInt("difficulty", 0);
+
         if (rank.levelNumber == __instance.levelNumber || ((__instance.levelNumber == 666 || __instance.levelNumber == 100) && rank.levelNumber == __instance.levelNumber + __instance.levelNumberInLayer - 1))
         {
             TMP_Text componentInChildren = __instance.transform.Find("Stats").Find("Rank").GetComponentInChildren<TMP_Text>();
-            if (rank.ranks[@int] == 12 && (rank.majorAssists == null || !rank.majorAssists[@int]))
+            if (rank.ranks[Tools.difficulty] == Plugin.DIF_VAL && (rank.majorAssists == null || !rank.majorAssists[Tools.difficulty]))
             {
                 componentInChildren.text = "<color=#FFFFFF>P</color>";
                 Image component2 = componentInChildren.transform.parent.GetComponent<Image>();
@@ -174,15 +148,15 @@ public static class LevelSelectPanelPatch
                 component2.sprite = __instance.filledPanel;
                 ___ls.AddScore(4, true);
             }
-            else if (rank.majorAssists != null && rank.majorAssists[@int])
+            else if (rank.majorAssists != null && rank.majorAssists[Tools.difficulty])
             {
-                if (rank.ranks[@int] < 0)
+                if (rank.ranks[Tools.difficulty] < 0)
                 {
                     componentInChildren.text = "";
                 }
                 else
                 {
-                    switch (rank.ranks[@int])
+                    switch (rank.ranks[Tools.difficulty])
                     {
                     case 1:
                         componentInChildren.text = "C";
@@ -212,7 +186,7 @@ public static class LevelSelectPanelPatch
                     component3.sprite = __instance.filledPanel;
                 }
             }
-            else if (rank.ranks[@int] < 0)
+            else if (rank.ranks[Tools.difficulty] < 0)
             {
                 componentInChildren.text = "";
                 Image component4 = componentInChildren.transform.parent.GetComponent<Image>();
@@ -221,7 +195,7 @@ public static class LevelSelectPanelPatch
             }
             else
             {
-                switch (rank.ranks[@int])
+                switch (rank.ranks[Tools.difficulty])
                 {
                 case 1:
                     componentInChildren.text = "<color=#4CFF00>C</color>";
@@ -281,7 +255,7 @@ public static class LevelSelectPanelPatch
                     __instance.challengeIcon.sprite = __instance.filledPanel;
                     TMP_Text componentInChildren2 = __instance.challengeIcon.GetComponentInChildren<TMP_Text>();
                     componentInChildren2.text = "C O M P L E T E";
-                    if (rank.ranks[@int] == 12 && (___allSecrets || rank.secretsAmount == 0))
+                    if (rank.ranks[Tools.difficulty] == Plugin.DIF_VAL && (___allSecrets || rank.secretsAmount == 0))
                     {
                         componentInChildren2.color = new Color(0.6f, 0.4f, 0f, 1f);
                     }
@@ -313,7 +287,7 @@ public static class LevelSelectPanelPatch
                 image2.sprite = __instance.unfilledPanel;
             }
         }
-        if ((rank.challenge || !__instance.challengeIcon) && rank.ranks[@int] == 12 && (___allSecrets || rank.secretsAmount == 0))
+        if ((rank.challenge || !__instance.challengeIcon) && rank.ranks[Tools.difficulty] == Plugin.DIF_VAL && (___allSecrets || rank.secretsAmount == 0))
         {
             ___ls.Gold();
             __instance.GetComponent<Image>().color = new Color(1f, 0.686f, 0f, 0.75f);

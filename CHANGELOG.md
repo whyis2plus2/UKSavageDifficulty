@@ -2,6 +2,7 @@
 - Made "Destroy!" and "This will hurt!" the only parriable attacks in Sisyphus Primes's second phase.
 - CG High scores are now saved
 - Changed the website link (in manifest.json) from the github repo to the gitlab repo
+- Added support for AngryLevelLoader
 
 # 0.1.2 - Retune
 - Changed the speed buff from 20% to 5% for all enemies except Strays and Schisms

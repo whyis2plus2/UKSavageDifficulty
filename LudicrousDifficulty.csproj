@@ -24,10 +24,11 @@
     <Reference Include="lib\Assembly-CSharp.dll" />
     <Reference Include="lib\UnityEngine.UI.dll" />
     <Reference Include="lib\UnityEngine.AssetBundleModule.dll" />
-    
     <Reference Include="lib\Unity.TextMeshPro.dll" />
     <Reference Include="lib\Unity.Addressables.dll" />
     <Reference Include="lib\Unity.ResourceManager.dll" />
+
+    <Reference Include="lib\AngryLevelLoader.dll" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">

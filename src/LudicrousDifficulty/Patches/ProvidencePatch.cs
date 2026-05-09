@@ -22,11 +22,11 @@ public static class ProvidencePatch
         __instance.currentEnrageEffect.transform.localScale *= 4;
     }
 
-
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Drone), "Death")]
     public static void EnrageOthersOnDeath(ref Drone __instance, ref EnemyIdentifier ___eid, ref GoreZone ___gz)
     {
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
         if (___eid.enemyType != EnemyType.Providence) return;
         if (__instance.Enemy.health > 0f) return;
 
@@ -46,8 +46,7 @@ public static class ProvidencePatch
     [HarmonyPatch(typeof(Drone), "Shoot")]
     public static void VirtueBeams(ref Drone __instance, ref EnemyIdentifier ___eid)
     {
-        var difficulty = PrefsManager.Instance.GetInt("difficulty");
-        if (difficulty < 12) return;
+        if (Tools.difficulty != Plugin.DIF_VAL) return;
         if (___eid.enemyType != EnemyType.Providence) return;
         if (!__instance.isEnraged) return; // don't spawn an extra virtue insignia when not enraged
 
