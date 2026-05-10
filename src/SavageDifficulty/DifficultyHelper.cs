@@ -12,13 +12,11 @@ public class AlgalDifficulty
 
     public bool isEnabled => DifficultyHelper.CurrentDifficulty == difficulty;
 
-    public AlgalDifficulty(string name, int difficuty, int baseDifficulty = -1)
+    public AlgalDifficulty(string name, int difficulty, int? baseDifficulty = null)
     {
         this.name = name;
-        this.difficulty = difficuty;
-        
-        if (baseDifficulty > 5) this.baseDifficulty = 5;
-        if (baseDifficulty < 0) this.baseDifficulty = (difficuty > 5)? 5 : difficuty;
+        this.difficulty = difficulty;
+        this.baseDifficulty = (baseDifficulty == null)? difficulty : baseDifficulty.Value;
     }
 
     public void Enable() => DifficultyHelper.CurrentDifficulty = difficulty;

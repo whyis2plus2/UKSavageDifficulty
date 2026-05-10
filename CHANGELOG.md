@@ -1,3 +1,6 @@
+# 0.3.1
+- Fixed a bug where the Harmless was used as the enemy difficulty instead of Brutal
+
 # 0.3.0
 - Updated description
 - Moved back to semantic versioning
