@@ -1,3 +1,7 @@
+# 0.3.0
+- Updated description
+- Moved back to semantic versioning
+
 # 2026.5.9.3
 - Made enraged providences less ugly
 - Fixed README so that enemy descriptions were properly indented outside of gitlab
