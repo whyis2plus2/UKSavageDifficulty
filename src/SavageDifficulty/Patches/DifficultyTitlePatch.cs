@@ -12,9 +12,9 @@ public static class DifficultyTitlePatch
     [HarmonyPatch(typeof(DifficultyTitle), "Check")]
     public static bool DifficultyTitle_Check_Prefix(ref DifficultyTitle __instance, ref TMP_Text ___txt2)
     {
-        if (Tools.difficulty != Plugin.DIF_VAL) return true;
+        if (!DifficultyHelper.Savage.isEnabled) return true;
 
-        string text = Plugin.DIF_NAME.ToUpper();
+        string text = DifficultyHelper.Savage.name;
         if (__instance.lines) text = $"-- {text} --";
         if (!___txt2) ___txt2 = __instance.GetComponent<TMP_Text>();
         ___txt2.text = text;

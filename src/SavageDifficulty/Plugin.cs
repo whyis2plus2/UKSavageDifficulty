@@ -26,10 +26,7 @@ public class Plugin : BaseUnityPlugin
     // angry level loader does this, and I quite like it
     public const string PLUGIN_GUID = "com.whyis2plus2.SavageDifficulty";
     public const string PLUGIN_NAME = "SavageDifficulty";
-    public const string PLUGIN_VERSION = "2026.5.903";
-
-    public const string DIF_NAME = "SAVAGE";
-    public const int    DIF_VAL  = 12;
+    public const string PLUGIN_VERSION = "0.3.0";
 
     /// <summary> The current instance of the plugin, accessable by all parts of the code </summary>
     public static Plugin instance;
@@ -85,7 +82,6 @@ public class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(Patches.PrefsManagerPatch));
         harmony.PatchAll(typeof(Patches.RankDataPatch));
         harmony.PatchAll(typeof(Patches.GameProgressSaverPatch));
-        harmony.PatchAll(typeof(Patches.LevelSelectPanelPatch));
 
         // load enemy patches
         harmony.PatchAll(typeof(Patches.EnemyPatch));
@@ -143,10 +139,10 @@ public class Plugin : BaseUnityPlugin
         // clone the brutal button
         difficultyButton = Instantiate(buttons.GetValueSafe("Brutal"), interactables);
         difficultyButton.GetComponent<DifficultySelectButton>().difficulty = 12;
-        difficultyButton.transform.Find("Name").GetComponent<TMP_Text>().text = DIF_NAME.ToUpper();
+        difficultyButton.transform.Find("Name").GetComponent<TMP_Text>().text = DifficultyHelper.Savage.name;
         difficultyButton.transform.position = buttons.GetValueSafe("V1 Must Die").transform.position;
         difficultyButton.transform.position = new(difficultyButton.transform.position.x + 600, difficultyButton.transform.position.y, difficultyButton.transform.position.z);
-        difficultyButton.name = $"{DIF_NAME}";
+        difficultyButton.name = $"{DifficultyHelper.Savage.name}";
 
         // disable the original ukmd button so that it doesn't get in the way
         buttons.GetValueSafe("V1 Must Die").gameObject.SetActive(false);
@@ -198,11 +194,11 @@ public class Plugin : BaseUnityPlugin
         logger.LogInfo("Adding difficulty Info...");
 
         difficultyInfo = Instantiate(interactables.Find("Brutal Info").gameObject, interactables);
-        difficultyInfo.name = $"{DIF_NAME} Info";
+        difficultyInfo.name = $"{DifficultyHelper.Savage.name} Info";
 
         var difficultyTitle = difficultyInfo.transform.Find("Title (1)").GetComponent<TMP_Text>();
 
-        difficultyTitle.text = $"--{DIF_NAME.ToUpper()}--";
+        difficultyTitle.text = $"--{DifficultyHelper.Savage.name}--";
 
         // set the description of difficulty
         difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 

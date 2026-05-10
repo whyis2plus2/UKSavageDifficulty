@@ -10,7 +10,7 @@ public static class EnemyPatch
     [HarmonyPatch(typeof(EnemyIdentifier), "UpdateModifiers")]
     public static void StatsScaling(ref EnemyIdentifier __instance)
     {
-        if (Tools.difficulty != Plugin.DIF_VAL) return;
+        if (!DifficultyHelper.Savage.isEnabled) return;
 
         if (__instance.enemyType is EnemyType.Idol or EnemyType.Deathcatcher) return;
         if (__instance.puppet) return;
@@ -33,7 +33,7 @@ public static class EnemyPatch
     [HarmonyPatch(typeof(Enemy), "InitializeDifficulty")]
     public static bool ForceDifficultyOverride(ref int __result)
     {
-        if (Tools.difficulty != Plugin.DIF_VAL) return true;
+        if (!DifficultyHelper.Savage.isEnabled) return true;
 
         __result = 4;
         return false;

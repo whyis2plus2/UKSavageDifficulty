@@ -1,6 +1,6 @@
 @echo off
 set "projectName=SavageDifficulty"
-set "version=2026.5.9.3"
+set "version=0.3.0"
 set "buildDir=.\out"
 set "target=whyis2plus2-%projectName%-%version%.zip"
 

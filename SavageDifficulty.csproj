@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>SavageDifficulty</AssemblyName>
     <Description>A custom difficulty mod that aims to be harder than Brutal, within reason.</Description>
-    <Version>2026.5.903</Version>
+    <Version>0.3.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -12,7 +12,7 @@
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>LudicrousDifficulty</RootNamespace>
+    <RootNamespace>SavageDifficulty</RootNamespace>
     <NoWarn>IDE1006, IDE0044, IDE0130, IDE0028</NoWarn>
   </PropertyGroup>
 
