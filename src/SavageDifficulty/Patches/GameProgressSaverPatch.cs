@@ -130,4 +130,13 @@ public static class GameProgressSaverPatch
         __result = cgRankData;
         return false;
     }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(GameProgressSaver), "GetRank", [typeof(int), typeof(bool)])]
+    public static void GameProgressSaver_GetRank_Postfix(ref RankData __result)
+    {
+        Array.Resize(ref __result.majorAssists, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+        Array.Resize(ref __result.ranks, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+        Array.Resize(ref __result.stats, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+    }
 }

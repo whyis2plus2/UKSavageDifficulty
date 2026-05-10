@@ -35,7 +35,7 @@ public static class EnemyPatch
     {
         if (!DifficultyHelper.Savage.isEnabled) return true;
 
-        __result = 4;
+        __result = DifficultyHelper.Savage.baseDifficulty;
         return false;
     }
 }
