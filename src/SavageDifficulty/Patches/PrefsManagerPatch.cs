@@ -9,10 +9,10 @@ public static class PrefsManagerPatch
 {
     [HarmonyPostfix]
     [HarmonyPatch(typeof(PrefsManager), MethodType.Constructor)]
-    public static void PrefsManager_Ctor_Postfix(ref Dictionary<string, Func<object, object>> ___propertyValidators)
+    public static void PrefsManager_Ctor_Postfix(ref PrefsManager __instance)
     {
         // remove the difficulty check
-        ___propertyValidators.Remove("difficulty");
+        __instance.propertyValidators.Remove("difficulty");
     }
 
     [HarmonyPrefix]

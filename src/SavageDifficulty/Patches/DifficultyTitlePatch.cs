@@ -10,14 +10,14 @@ public static class DifficultyTitlePatch
 {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(DifficultyTitle), "Check")]
-    public static bool DifficultyTitle_Check_Prefix(ref DifficultyTitle __instance, ref TMP_Text ___txt2)
+    public static bool DifficultyTitle_Check_Prefix(ref DifficultyTitle __instance)
     {
         if (!DifficultyHelper.Savage.isEnabled) return true;
 
         string text = DifficultyHelper.Savage.name;
         if (__instance.lines) text = $"-- {text} --";
-        if (!___txt2) ___txt2 = __instance.GetComponent<TMP_Text>();
-        ___txt2.text = text;
+        if (!__instance.txt2) __instance.txt2 = __instance.GetComponent<TMP_Text>();
+        __instance.txt2.text = text;
         return false;
     }
 }

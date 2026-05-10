@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using BepInEx.Bootstrap;
 using HarmonyLib;
 
+using AngryLevelLoader.Managers;
+
 public static class Angry
 {
     public static bool AngryLoaded => Chainloader.PluginInfos.ContainsKey(AngryLevelLoader.Plugin.PLUGIN_GUID);
@@ -13,24 +15,24 @@ public static class Angry
         Plugin.instance.logger.Log(BepInEx.Logging.LogLevel.Info, $"Has angry: {AngryLoaded}");
         if (!AngryLoaded) return;
 
-        Plugin.instance.harmony.PatchAll(typeof(Angry.Patches));
+        Plugin.instance.harmony.PatchAll(typeof(Patches));
     }
 
     public static class Patches
     {
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(AngryLevelLoader.Managers.AngryDifficultyManager), "Init")]
-        public static void AngryDifficultyManager_Init_Postfix(ref List<AngryLevelLoader.Managers.AngryDifficulty> ___difficulties)
+        [HarmonyPatch(typeof(AngryDifficultyManager), "Init")]
+        public static void AngryDifficultyManager_Init_Postfix()
         {
-            ___difficulties.Add(DifficultyHelper.Savage.IntoAngryDifficulty());
+            AngryDifficultyManager.difficulties.Add(DifficultyHelper.Savage.IntoAngryDifficulty());
         }
 
         [HarmonyPrefix]
-        [HarmonyPatch(typeof(AngryLevelLoader.Managers.AngryDifficultyManager), "SetDifficultyFromPrefs")]
-        public static bool AngryDifficultyManager_SetDifficultyFromPrefs_Prefix(ref List<AngryLevelLoader.Managers.AngryDifficulty> ___difficulties)
+        [HarmonyPatch(typeof(AngryDifficultyManager), "SetDifficultyFromPrefs")]
+        public static bool AngryDifficultyManager_SetDifficultyFromPrefs_Prefix()
         {
             if (!DifficultyHelper.Savage.isEnabled) return true;
-            AngryLevelLoader.Managers.AngryDifficultyManager.SetDifficulty(DifficultyHelper.Savage.IntoAngryDifficulty());
+            AngryDifficultyManager.SetDifficulty(DifficultyHelper.Savage.IntoAngryDifficulty());
             return false;
         }
     }

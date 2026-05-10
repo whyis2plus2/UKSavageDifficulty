@@ -8,13 +8,6 @@ using HarmonyLib;
 
 public static class GameProgressSaverPatch
 {
-    static MethodInfo methodInfo_GetGameProgress = typeof(GameProgressSaver).GetMethod(name: "GetGameProgress", bindingAttr: BindingFlags.Static | BindingFlags.NonPublic, types: [typeof(int)], binder: null, modifiers: null);
-    static GameProgressData GetGameProgress(int difficulty = -1) =>
-        (GameProgressData)methodInfo_GetGameProgress.Invoke(null, [difficulty]);
-
-    static MethodInfo methodInfo_ReadFile = typeof(GameProgressSaver).GetMethod(name: "ReadFile", bindingAttr: BindingFlags.Static | BindingFlags.NonPublic, types: [typeof(string)], binder: null, modifiers: null);
-    static object ReadFile(string path) => methodInfo_ReadFile.Invoke(null, [path]);
-
     [HarmonyPrefix]
     [HarmonyPatch(typeof(GameProgressSaver), "GetProgress")]
     public static bool GameProgressSaver_GetProgress_Prefix(ref int __result, ref int difficulty)
@@ -22,7 +15,7 @@ public static class GameProgressSaverPatch
         int levelNum = 1;
         for (int i = difficulty; i < DifficultyHelper.MAX_DIFFICULTY_VAL + 1; ++i)
         {
-            var progress = GetGameProgress(i);
+            var progress = GameProgressSaver.GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.levelNum > levelNum)
             {
                 levelNum = progress.levelNum;
@@ -40,7 +33,7 @@ public static class GameProgressSaverPatch
         int levelNum = 0;
         for (int i = difficulty; i < DifficultyHelper.MAX_DIFFICULTY_VAL + 1; ++i)
         {
-            var progress = GetGameProgress(i);
+            var progress = GameProgressSaver.GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.encores > levelNum)
             {
                 levelNum = progress.encores;
@@ -65,7 +58,7 @@ public static class GameProgressSaverPatch
         int levelNum = 0;
         for (int i = difficulty; i < DifficultyHelper.MAX_DIFFICULTY_VAL + 1; ++i)
         {
-            var progress = GetGameProgress(i);
+            var progress = GameProgressSaver.GetGameProgress(i);
             if (progress != null && progress.difficulty == i && progress.primeLevels != null && progress.primeLevels.Length > level && progress.primeLevels[level] > levelNum)
             {
                 if (progress.primeLevels[level] >= 2)
@@ -87,7 +80,7 @@ public static class GameProgressSaverPatch
     public static bool GameProgressSaver_GetCyberRankData_Prefix(ref CyberRankData __result)
     {
         var cgHighScorePath = Path.Combine(GameProgressSaver.SavePath, "cybergrindhighscore.bepis");
-        var cgRankData = (CyberRankData)ReadFile(cgHighScorePath);
+        var cgRankData = (CyberRankData)GameProgressSaver.ReadFile(cgHighScorePath);
 
         if (cgRankData == null) cgRankData = new();
 
