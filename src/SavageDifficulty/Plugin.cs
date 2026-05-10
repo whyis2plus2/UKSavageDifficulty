@@ -203,9 +203,9 @@ public class Plugin : BaseUnityPlugin
         // set the description of difficulty
         difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 
             """
-            <color=white>Extremely agressive enemies and higher damage.
+            <color=white>Extremely aggressive enemies and very high damage.
             
-            A full arsenal and extensive knowledge of the game are expected. Every small mistake could be a fatal error.</color>
+            A full arsenal, quick thinking, and a well-versed playstyle are expected. Even a tiny mistake can be fatal.</color>
 
             <b>Recommended for those who are used to the difficulty of Brutal and are looking for a new challenge.</b>
             """;
