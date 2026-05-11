@@ -11,7 +11,7 @@ public static class ProvidencePatch
     public static void Drone_Awake_Postfix(ref Drone __instance)
     {
         if (__instance.eid.enemyType != EnemyType.Providence) return;
-        __instance.enrageEffect = Plugin.instance.enrageEffect;
+        __instance.enrageEffect = Plugin.Instance.enrageEffect;
     }
 
     [HarmonyPostfix]
@@ -61,7 +61,7 @@ public static class ProvidencePatch
             if (drone.Enemy.EID.enemyType != EnemyType.Providence) continue;
 
             if (!drone.isEnraged) drone.Enrage();
-            Plugin.instance.logger.LogInfo("Enraging providence");
+            Plugin.Instance.logger.LogInfo("Enraging providence");
         }
     }
 
@@ -73,7 +73,7 @@ public static class ProvidencePatch
         if (__instance.eid.enemyType != EnemyType.Providence) return;
         if (!__instance.isEnraged) return; // don't spawn an extra virtue insignia when not enraged
 
-        GameObject insigniaObject = Object.Instantiate(Plugin.instance.virtueInsignia);
+        GameObject insigniaObject = Object.Instantiate(Plugin.Instance.virtueInsignia);
         VirtueInsignia insignia = insigniaObject.GetComponent<VirtueInsignia>();
 
         insignia.target = __instance.eid.target;

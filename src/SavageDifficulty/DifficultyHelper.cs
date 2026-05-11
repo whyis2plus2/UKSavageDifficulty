@@ -1,7 +1,9 @@
 namespace SavageDifficulty;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using BepInEx.Logging;
 using HarmonyLib;
 
 public class AlgalDifficulty
@@ -23,7 +25,7 @@ public class AlgalDifficulty
 
     public AngryLevelLoader.Managers.AngryDifficulty IntoAngryDifficulty()
     {
-        if (!Compat.Angry.AngryLoaded) return null;
+        if (!Compat.Angry.IsLoaded) return null;
         return new(name, difficulty);
     }
 }
@@ -46,7 +48,19 @@ public static class DifficultyHelper
     public static bool IsCustom => CurrentDifficulty > 4;
 
     public static List<AlgalDifficulty> KnownDifficulties = [];
-    public const int MAX_DIFFICULTY_VAL = 24;
+    public static readonly int MaxDifficulty = 0;
+
+    static AlgalDifficulty GetDifficultyByName(string name)
+    {
+        var idx = KnownDifficulties.FindIndex(d => d.name == name);
+        return (idx < 0)? null : KnownDifficulties[idx];
+    }
+
+    static AlgalDifficulty GetDifficultyByIntVal(int difficulty)
+    {
+        var idx = KnownDifficulties.FindIndex(d => d.difficulty == difficulty);
+        return (idx < 0)? null : KnownDifficulties[idx];
+    }
 
     static DifficultyHelper()
     {
@@ -56,5 +70,12 @@ public static class DifficultyHelper
         KnownDifficulties.Add(Violent);
         KnownDifficulties.Add(Brutal);
         KnownDifficulties.Add(Savage);
+
+        if (Compat.Billion.IsLoaded) KnownDifficulties.Add(new("BILLION", 20, 5));
+
+        foreach (var d in KnownDifficulties)
+            if (d.difficulty > MaxDifficulty) MaxDifficulty = d.difficulty;
+
+        Plugin.Instance.logger.Log(LogLevel.Info, $"Max Difficulty: {GetDifficultyByIntVal(MaxDifficulty).name} ({MaxDifficulty})");
     }
 }

@@ -8,14 +8,14 @@ using AngryLevelLoader.Managers;
 
 public static class Angry
 {
-    public static bool AngryLoaded => Chainloader.PluginInfos.ContainsKey(AngryLevelLoader.Plugin.PLUGIN_GUID);
+    public static bool IsLoaded => Chainloader.PluginInfos.ContainsKey(AngryLevelLoader.Plugin.PLUGIN_GUID);
 
     public static void Init()
     {
-        Plugin.instance.logger.Log(BepInEx.Logging.LogLevel.Info, $"Has angry: {AngryLoaded}");
-        if (!AngryLoaded) return;
+        Plugin.Instance.logger.Log(BepInEx.Logging.LogLevel.Info, $"Has angry: {IsLoaded}");
+        if (!IsLoaded) return;
 
-        Plugin.instance.harmony.PatchAll(typeof(Patches));
+        Plugin.Instance.harmony.PatchAll(typeof(Patches));
     }
 
     public static class Patches

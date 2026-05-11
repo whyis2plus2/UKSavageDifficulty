@@ -17,10 +17,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Unity;
 using UnityEngine.AddressableAssets;
+using static BillionDifficulty.Plugin;
 
 [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
 [BepInDependency("Hydraxous.ULTRAKILL.EasyPZ", DependencyFlags.SoftDependency)] // the game crashes w/o this if EasyPZ is enabled
 [BepInDependency(AngryLevelLoader.Plugin.PLUGIN_GUID, DependencyFlags.SoftDependency)]
+[BepInDependency(Compat.Billion.GUID, DependencyFlags.SoftDependency)]
 public class Plugin : BaseUnityPlugin
 {
     // angry level loader does this, and I quite like it
@@ -29,7 +31,7 @@ public class Plugin : BaseUnityPlugin
     public const string PLUGIN_VERSION = "0.3.1";
 
     /// <summary> The current instance of the plugin, accessable by all parts of the code </summary>
-    public static Plugin instance;
+    public static Plugin Instance;
 
     /// <summary> The "interactable" components of the difficulty select menu (mostly just difficulty buttons and infos) </summary>
     public Transform interactables {private set; get;}
@@ -54,7 +56,8 @@ public class Plugin : BaseUnityPlugin
     public GameObject enrageEffect;
 
     static bool addressablesInit = false;
-    T LoadAsset<T>(string path)
+
+    static T LoadAsset<T>(string path)
     {
         if (!addressablesInit)
         {
@@ -65,9 +68,16 @@ public class Plugin : BaseUnityPlugin
         return Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
     }
 
+    static EventTrigger.Entry CreateTriggerEntry(EventTriggerType id, UnityAction<BaseEventData> call)
+    {
+        EventTrigger.Entry ret = new() { eventID = id };
+        ret.callback.AddListener(call);
+        return ret;
+    }
+
     void Awake()
     {
-        instance = this;
+        Instance = this;
         SceneManager.activeSceneChanged += (_, _) => OnSceneChange();
         
         // load prefabls
@@ -106,12 +116,12 @@ public class Plugin : BaseUnityPlugin
         // difficulty buttons and difficulty infos
         interactables = canvas.Find("Difficulty Select (1)/Interactables");
 
-        // create the new UKMD button and Info
+        // create the new button and Info
         AddInfo();
         AddButton();
     }
 
-    /// <summary> Add the UKMD button and info to the difficulty select menu </summary>
+    /// <summary> Add the button and info to the difficulty select menu </summary>
     void AddButton()
     {
         KeyValuePair<string, GameObject> FindElem(string name) =>
@@ -125,7 +135,7 @@ public class Plugin : BaseUnityPlugin
             FindElem("Standard"),
             FindElem("Violent"),
             FindElem("Brutal"),
-            FindElem("V1 Must Die"), // Real UKMD button
+            // FindElem("V1 Must Die"), // Real UKMD button
         ]);
 
         Dictionary<string, GameObject> infos = new([
@@ -140,12 +150,9 @@ public class Plugin : BaseUnityPlugin
         difficultyButton = Instantiate(buttons.GetValueSafe("Brutal"), interactables);
         difficultyButton.GetComponent<DifficultySelectButton>().difficulty = 12;
         difficultyButton.transform.Find("Name").GetComponent<TMP_Text>().text = DifficultyHelper.Savage.name;
-        difficultyButton.transform.position = buttons.GetValueSafe("V1 Must Die").transform.position;
+        difficultyButton.transform.position = buttons.GetValueSafe("Casual Easy").transform.position;
         difficultyButton.transform.position = new(difficultyButton.transform.position.x + 600, difficultyButton.transform.position.y, difficultyButton.transform.position.z);
         difficultyButton.name = $"{DifficultyHelper.Savage.name}";
-
-        // disable the original ukmd button so that it doesn't get in the way
-        buttons.GetValueSafe("V1 Must Die").gameObject.SetActive(false);
 
         // the event triggers that the button uses to show/hide its description
         var buttonTrigger = difficultyButton.GetComponent<EventTrigger>();
@@ -162,22 +169,22 @@ public class Plugin : BaseUnityPlugin
             if (!trigger) continue;
 
             trigger.triggers.Add(
-                Tools.CreateTriggerEntry(EventTriggerType.PointerEnter, _ => difficultyInfo.SetActive(false))
+                CreateTriggerEntry(EventTriggerType.PointerEnter, _ => difficultyInfo.SetActive(false))
             );
         }
 
         // add new triggers to ukmd button
         buttonTrigger.triggers.AddRange([
-            Tools.CreateTriggerEntry(EventTriggerType.PointerEnter, _ =>
+            CreateTriggerEntry(EventTriggerType.PointerEnter, _ =>
             {
                 difficultyInfo.SetActive(true);
                 foreach (var info in infos.Values) info.SetActive(false);
             }),
 
-            Tools.CreateTriggerEntry(EventTriggerType.PointerExit,  _ => difficultyInfo.SetActive(false)),
-            Tools.CreateTriggerEntry(EventTriggerType.PointerClick, eventData =>
+            CreateTriggerEntry(EventTriggerType.PointerExit,  _ => difficultyInfo.SetActive(false)),
+            CreateTriggerEntry(EventTriggerType.PointerClick, eventData =>
             {
-                PrefsManager.Instance.SetInt("difficulty", 12);
+                PrefsManager.Instance.SetInt("difficulty", DifficultyHelper.Savage.difficulty);
                 difficultyInfo.SetActive(false);
             }),
         ]);

@@ -22,7 +22,7 @@ class RankDataPatch
             }
             else
             {
-                __instance.majorAssists = new bool[DifficultyHelper.MAX_DIFFICULTY_VAL + 1];
+                __instance.majorAssists = new bool[DifficultyHelper.MaxDifficulty + 1];
             }
             if (rank.stats != null)
             {
@@ -30,16 +30,16 @@ class RankDataPatch
             }
             else
             {
-                __instance.stats = new RankScoreData[DifficultyHelper.MAX_DIFFICULTY_VAL + 1];
+                __instance.stats = new RankScoreData[DifficultyHelper.MaxDifficulty + 1];
             }
 
-            if (__instance.majorAssists.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref __instance.majorAssists, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-            if (__instance.ranks.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref __instance.ranks, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-            if (__instance.stats.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref __instance.stats, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+            if (__instance.majorAssists.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref __instance.majorAssists, DifficultyHelper.MaxDifficulty + 1);
+            if (__instance.ranks.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref __instance.ranks, DifficultyHelper.MaxDifficulty + 1);
+            if (__instance.stats.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref __instance.stats, DifficultyHelper.MaxDifficulty + 1);
 
-            if (rank.majorAssists.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref rank.majorAssists, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-            if (rank.ranks.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref rank.ranks, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-            if (rank.stats.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1) Array.Resize(ref rank.stats, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+            if (rank.majorAssists.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref rank.majorAssists, DifficultyHelper.MaxDifficulty + 1);
+            if (rank.ranks.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref rank.ranks, DifficultyHelper.MaxDifficulty + 1);
+            if (rank.stats.Length < DifficultyHelper.MaxDifficulty + 1) Array.Resize(ref rank.stats, DifficultyHelper.MaxDifficulty + 1);
 
             if ((sman.rankScore >= rank.ranks[DifficultyHelper.CurrentDifficulty] && (rank.majorAssists == null || (!sman.majorUsed && rank.majorAssists[DifficultyHelper.CurrentDifficulty]))) || sman.rankScore > rank.ranks[DifficultyHelper.CurrentDifficulty] || rank.levelNumber != __instance.levelNumber)
             {
@@ -67,13 +67,13 @@ class RankDataPatch
             __instance.challenge = rank.challenge;
             return false;
         }
-        __instance.ranks = new int[DifficultyHelper.MAX_DIFFICULTY_VAL + 1];
-        __instance.stats = new RankScoreData[DifficultyHelper.MAX_DIFFICULTY_VAL + 1];
+        __instance.ranks = new int[DifficultyHelper.MaxDifficulty + 1];
+        __instance.stats = new RankScoreData[DifficultyHelper.MaxDifficulty + 1];
         if (__instance.stats[DifficultyHelper.CurrentDifficulty] == null)
         {
             __instance.stats[DifficultyHelper.CurrentDifficulty] = new RankScoreData();
         }
-        __instance.majorAssists = new bool[DifficultyHelper.MAX_DIFFICULTY_VAL + 1];
+        __instance.majorAssists = new bool[DifficultyHelper.MaxDifficulty + 1];
         for (int i = 0; i < __instance.ranks.Length; i++)
         {
             __instance.ranks[i] = -1;
