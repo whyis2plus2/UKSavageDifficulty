@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 PROJECT_NAME="SavageDifficulty"
 VERSION="0.3.1"
 BUILD_DIR="./out"
