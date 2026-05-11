@@ -128,8 +128,13 @@ public static class GameProgressSaverPatch
     [HarmonyPatch(typeof(GameProgressSaver), "GetRank", [typeof(int), typeof(bool)])]
     public static void GameProgressSaver_GetRank_Postfix(ref RankData __result)
     {
-        Array.Resize(ref __result.majorAssists, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-        Array.Resize(ref __result.ranks, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
-        Array.Resize(ref __result.stats, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+        if (__result.majorAssists.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1)
+            Array.Resize(ref __result.majorAssists, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+
+        if (__result.ranks.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1)
+            Array.Resize(ref __result.ranks, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
+
+        if (__result.stats.Length < DifficultyHelper.MAX_DIFFICULTY_VAL + 1)
+            Array.Resize(ref __result.stats, DifficultyHelper.MAX_DIFFICULTY_VAL + 1);
     }
 }
