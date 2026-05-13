@@ -1,1 +1,0 @@
-- Figure out how to do certain essential patches without copying most of the dnspy output.
