@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 using HarmonyLib;
 
-// TODO: separate this to put it with the difficulty helper
-
 class RankDataPatch
 {
     [HarmonyPrefix]

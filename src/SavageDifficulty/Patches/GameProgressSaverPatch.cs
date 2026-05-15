@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
 
-// TODO: separate this to put it with the difficulty helper
-
 public static class GameProgressSaverPatch
 {
     [HarmonyPrefix]

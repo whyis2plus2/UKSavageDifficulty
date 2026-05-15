@@ -12,7 +12,7 @@ public static class EarthmoverTimerFix
     [HarmonyPatch(typeof(Countdown), "GetCountdownLength")]
     public static bool Coundown_GetCountdownLength_Prefix(ref float __result)
     {
-        if (!Plugin.Savage.isEnabled) return true;
+        if (!DifficultyHelper.Savage.isEnabled) return true;
 
         __result = 40f;
         return false;

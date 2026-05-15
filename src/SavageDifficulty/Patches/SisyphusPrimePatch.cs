@@ -14,7 +14,7 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "Start")]
     public static void SisyphusPrime_Start_Postfix(ref SisyphusPrime __instance)
     {
-        if (!Plugin.Savage.isEnabled) return;
+        if (!DifficultyHelper.Savage.isEnabled) return;
         EverySisyphus.Add(__instance, false);
     }
 
@@ -26,7 +26,7 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "PickPrimaryAttack", [typeof(int)])]
     public static void SisyphusPrime_PickPrimaryAttack_Prefix(ref SisyphusPrime __instance)
     {
-        if (!Plugin.Savage.isEnabled) return;
+        if (!DifficultyHelper.Savage.isEnabled) return;
         if (!__instance.enraged) return;
 
         EverySisyphus.Remove(__instance);
@@ -37,7 +37,7 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "PickSecondaryAttack", [typeof(int)])]
     public static void SisyphusPrime_PickSecondaryAttack_Prefix(ref SisyphusPrime __instance)
     {
-        if (!Plugin.Savage.isEnabled) return;
+        if (!DifficultyHelper.Savage.isEnabled) return;
         if (!__instance.enraged) return;
 
         EverySisyphus.Remove(__instance);
@@ -48,7 +48,7 @@ public static class SisyphusPrimePatch
     [HarmonyPatch(typeof(SisyphusPrime), "StompCombo")]
     public static void SisyphusPrime_StompCombo_Prefix(ref SisyphusPrime __instance)
     {
-        if (!Plugin.Savage.isEnabled) return;
+        if (!DifficultyHelper.Savage.isEnabled) return;
         if (!__instance.enraged) return;
 
         EverySisyphus.Remove(__instance);
