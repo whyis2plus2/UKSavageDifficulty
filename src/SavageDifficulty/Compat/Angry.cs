@@ -6,6 +6,9 @@ using HarmonyLib;
 
 using AngryLevelLoader.Managers;
 
+// TODO: make this difficulty agnostic
+// TODO: move this with DifficultyHelper
+
 public static class Angry
 {
     public static bool IsLoaded => Chainloader.PluginInfos.ContainsKey(AngryLevelLoader.Plugin.PLUGIN_GUID);
@@ -24,15 +27,15 @@ public static class Angry
         [HarmonyPatch(typeof(AngryDifficultyManager), "Init")]
         public static void AngryDifficultyManager_Init_Postfix()
         {
-            AngryDifficultyManager.difficulties.Add(DifficultyHelper.Savage.IntoAngryDifficulty());
+            AngryDifficultyManager.difficulties.Add(Plugin.Savage.IntoAngryDifficulty());
         }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(AngryDifficultyManager), "SetDifficultyFromPrefs")]
         public static bool AngryDifficultyManager_SetDifficultyFromPrefs_Prefix()
         {
-            if (!DifficultyHelper.Savage.isEnabled) return true;
-            AngryDifficultyManager.SetDifficulty(DifficultyHelper.Savage.IntoAngryDifficulty());
+            if (!Plugin.Savage.isEnabled) return true;
+            AngryDifficultyManager.SetDifficulty(Plugin.Savage.IntoAngryDifficulty());
             return false;
         }
     }

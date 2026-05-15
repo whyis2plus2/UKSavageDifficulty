@@ -10,7 +10,7 @@ public static class EnemyPatch
     [HarmonyPatch(typeof(EnemyIdentifier), "UpdateModifiers")]
     public static void StatsScaling(ref EnemyIdentifier __instance)
     {
-        if (!DifficultyHelper.Savage.isEnabled) return;
+        if (!Plugin.Savage.isEnabled) return;
 
         if (__instance.enemyType is EnemyType.Idol or EnemyType.Deathcatcher) return;
         if (__instance.puppet) return;
@@ -27,15 +27,5 @@ public static class EnemyPatch
         };
 
         __instance.totalHealthModifier *= __instance.isBoss? 1.25f : 1.05f;
-    }
-
-    [HarmonyPrefix]
-    [HarmonyPatch(typeof(Enemy), "InitializeDifficulty")]
-    public static bool ForceDifficultyOverride(ref int __result)
-    {
-        if (!DifficultyHelper.Savage.isEnabled) return true;
-
-        __result = DifficultyHelper.Savage.baseDifficulty;
-        return false;
     }
 }

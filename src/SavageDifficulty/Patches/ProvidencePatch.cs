@@ -49,7 +49,7 @@ public static class ProvidencePatch
     [HarmonyPatch(typeof(Drone), "Death")]
     public static void EnrageOthersOnDeath(ref Drone __instance)
     {
-        if (!DifficultyHelper.Savage.isEnabled) return;
+        if (!Plugin.Savage.isEnabled) return;
         if (__instance.eid.enemyType != EnemyType.Providence) return;
         if (__instance.Enemy.health > 0f) return;
 
@@ -69,7 +69,7 @@ public static class ProvidencePatch
     [HarmonyPatch(typeof(Drone), "Shoot")]
     public static void VirtueBeams(ref Drone __instance)
     {
-        if (!DifficultyHelper.Savage.isEnabled) return;
+        if (!Plugin.Savage.isEnabled) return;
         if (__instance.eid.enemyType != EnemyType.Providence) return;
         if (!__instance.isEnraged) return; // don't spawn an extra virtue insignia when not enraged
 

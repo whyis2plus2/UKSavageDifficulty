@@ -55,6 +55,8 @@ public class Plugin : BaseUnityPlugin
     public GameObject virtueInsignia;
     public GameObject enrageEffect;
 
+    public static AlgalDifficulty Savage = new("SAVAGE", 12, 4);
+
     static bool addressablesInit = false;
 
     static T LoadAsset<T>(string path)
@@ -68,17 +70,10 @@ public class Plugin : BaseUnityPlugin
         return Addressables.LoadAssetAsync<T>(path).WaitForCompletion();
     }
 
-    static EventTrigger.Entry CreateTriggerEntry(EventTriggerType id, UnityAction<BaseEventData> call)
-    {
-        EventTrigger.Entry ret = new() { eventID = id };
-        ret.callback.AddListener(call);
-        return ret;
-    }
-
     void Awake()
     {
         Instance = this;
-        SceneManager.activeSceneChanged += (_, _) => OnSceneChange();
+        SceneManager.activeSceneChanged += (_, _) => DifficultyHelper.CreateDifficultyButtons();
         
         // load prefabls
         homingProjectile = LoadAsset<GameObject>("Assets/Prefabs/Attacks and Projectiles/Projectile Homing.prefab");
@@ -87,9 +82,6 @@ public class Plugin : BaseUnityPlugin
         enrageEffect = LoadAsset<GameObject>("Assets/Particles/Enemies/RageEffect.prefab");
 
         // load core patches
-        harmony.PatchAll(typeof(Patches.PresenceControllerPatch));
-        harmony.PatchAll(typeof(Patches.DifficultyTitlePatch));
-        harmony.PatchAll(typeof(Patches.PrefsManagerPatch));
         harmony.PatchAll(typeof(Patches.RankDataPatch));
         harmony.PatchAll(typeof(Patches.GameProgressSaverPatch));
 
@@ -103,112 +95,7 @@ public class Plugin : BaseUnityPlugin
         // handle compat
         Compat.Angry.Init();
 
-        logger.LogInfo($"Loaded {PLUGIN_NAME}");
-    }
-
-    void OnSceneChange()
-    {
-        // LeaderboardProperties.Difficulties[5] = DIF_NAME;
-        if (SceneHelper.CurrentScene != "Main Menu") return;
-
-        canvas = (from obj in SceneManager.GetActiveScene().GetRootGameObjects() where obj.name == "Canvas" select obj).First().transform;
-
-        // difficulty buttons and difficulty infos
-        interactables = canvas.Find("Difficulty Select (1)/Interactables");
-
-        // create the new button and Info
-        AddInfo();
-        AddButton();
-    }
-
-    /// <summary> Add the button and info to the difficulty select menu </summary>
-    void AddButton()
-    {
-        KeyValuePair<string, GameObject> FindElem(string name) =>
-            new(name, interactables.Find(name).gameObject);
-
-        logger.LogInfo("Adding difficulty button...");
-
-        Dictionary<string, GameObject> buttons = new([
-            FindElem("Casual Easy"), // Harmless
-            FindElem("Casual Hard"), // Lenient
-            FindElem("Standard"),
-            FindElem("Violent"),
-            FindElem("Brutal"),
-            // FindElem("V1 Must Die"), // Real UKMD button
-        ]);
-
-        Dictionary<string, GameObject> infos = new([
-            FindElem("Harmless Info"),
-            FindElem("Lenient Info"),
-            FindElem("Standard Info"),
-            FindElem("Violent Info"),
-            FindElem("Brutal Info"),
-        ]);
-
-        // clone the brutal button
-        difficultyButton = Instantiate(buttons.GetValueSafe("Brutal"), interactables);
-        difficultyButton.GetComponent<DifficultySelectButton>().difficulty = 12;
-        difficultyButton.transform.Find("Name").GetComponent<TMP_Text>().text = DifficultyHelper.Savage.name;
-        difficultyButton.transform.position = buttons.GetValueSafe("Casual Easy").transform.position;
-        difficultyButton.transform.position = new(difficultyButton.transform.position.x + 600, difficultyButton.transform.position.y, difficultyButton.transform.position.z);
-        difficultyButton.name = $"{DifficultyHelper.Savage.name}";
-
-        // the event triggers that the button uses to show/hide its description
-        var buttonTrigger = difficultyButton.GetComponent<EventTrigger>();
-
-        // remove old triggers because those use Brutal's description instead of UKMD's description
-        buttonTrigger.triggers.Clear();
-
-        // If the info hasn't been created yet, try to create it
-        if (!difficultyInfo) AddInfo();
-
-        // hide ukmd info if any of the other buttons are hovered over
-        foreach (var button in buttons.Values) {
-            var trigger = button.GetComponent<EventTrigger>();
-            if (!trigger) continue;
-
-            trigger.triggers.Add(
-                CreateTriggerEntry(EventTriggerType.PointerEnter, _ => difficultyInfo.SetActive(false))
-            );
-        }
-
-        // add new triggers to ukmd button
-        buttonTrigger.triggers.AddRange([
-            CreateTriggerEntry(EventTriggerType.PointerEnter, _ =>
-            {
-                difficultyInfo.SetActive(true);
-                foreach (var info in infos.Values) info.SetActive(false);
-            }),
-
-            CreateTriggerEntry(EventTriggerType.PointerExit,  _ => difficultyInfo.SetActive(false)),
-            CreateTriggerEntry(EventTriggerType.PointerClick, eventData =>
-            {
-                PrefsManager.Instance.SetInt("difficulty", DifficultyHelper.Savage.difficulty);
-                difficultyInfo.SetActive(false);
-            }),
-        ]);
-
-        // add button to the button activation sequence
-        var activationSequence = interactables.GetComponent<ObjectActivateInSequence>();
-        activationSequence.objectsToActivate = activationSequence.objectsToActivate.AddItem(difficultyButton).ToArray();
-
-        logger.LogInfo("Added difficulty button");
-    }
-
-    void AddInfo()
-    {
-        logger.LogInfo("Adding difficulty Info...");
-
-        difficultyInfo = Instantiate(interactables.Find("Brutal Info").gameObject, interactables);
-        difficultyInfo.name = $"{DifficultyHelper.Savage.name} Info";
-
-        var difficultyTitle = difficultyInfo.transform.Find("Title (1)").GetComponent<TMP_Text>();
-
-        difficultyTitle.text = $"--{DifficultyHelper.Savage.name}--";
-
-        // set the description of difficulty
-        difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 
+        Savage.info =
             """
             <color=white>Extremely aggressive enemies and very high damage.
             
@@ -217,6 +104,116 @@ public class Plugin : BaseUnityPlugin
             <b>Recommended for those who are used to the difficulty of Brutal and are looking for a new challenge.</b>
             """;
 
-        logger.LogInfo($"Added difficulty Info");
+        DifficultyHelper.AddDifficulty(Savage);
+
+        logger.LogInfo($"Loaded {PLUGIN_NAME}");
     }
+
+    // void OnSceneChange()
+    // {
+    //     // LeaderboardProperties.Difficulties[5] = DIF_NAME;
+    //     if (SceneHelper.CurrentScene != "Main Menu") return;
+
+    //     canvas = (from obj in SceneManager.GetActiveScene().GetRootGameObjects() where obj.name == "Canvas" select obj).First().transform;
+
+    //     // difficulty buttons and difficulty infos
+    //     interactables = canvas.Find("Difficulty Select (1)/Interactables");
+
+    //     // create the new button and Info
+    //     AddInfo();
+    //     AddButton();
+    // }
+
+    // /// <summary> Add the button and info to the difficulty select menu </summary>
+    // void AddButton()
+    // {
+    //     KeyValuePair<string, GameObject> FindElem(string name) =>
+    //         new(name, interactables.Find(name).gameObject);
+
+    //     logger.LogInfo("Adding difficulty button...");
+
+    //     Dictionary<string, GameObject> buttons = new([
+    //         FindElem("Casual Easy"), // Harmless
+    //         FindElem("Casual Hard"), // Lenient
+    //         FindElem("Standard"),
+    //         FindElem("Violent"),
+    //         FindElem("Brutal"),
+    //         FindElem("V1 Must Die"), // UKMD button
+    //     ]);
+
+    //     Dictionary<string, GameObject> infos = new([
+    //         FindElem("Harmless Info"),
+    //         FindElem("Lenient Info"),
+    //         FindElem("Standard Info"),
+    //         FindElem("Violent Info"),
+    //         FindElem("Brutal Info"),
+    //     ]);
+
+    //     // clone the brutal button
+    //     difficultyButton = Instantiate(buttons.GetValueSafe("Brutal"), interactables);
+    //     difficultyButton.GetComponent<DifficultySelectButton>().difficulty = 12;
+    //     difficultyButton.transform.Find("Name").GetComponent<TMP_Text>().text = DifficultyHelper.Savage.name;
+    //     difficultyButton.transform.position = buttons.GetValueSafe("Casual Easy").transform.position;
+    //     difficultyButton.transform.position = new(difficultyButton.transform.position.x + 600, difficultyButton.transform.position.y, difficultyButton.transform.position.z);
+    //     difficultyButton.name = $"{DifficultyHelper.Savage.name}";
+
+    //     // the event triggers that the button uses to show/hide its description
+    //     var buttonTrigger = difficultyButton.GetComponent<EventTrigger>();
+
+    //     // remove old triggers because those use Brutal's
+    //     buttonTrigger.triggers.Clear();
+
+    //     // If the info hasn't been created yet, try to create it
+    //     if (!difficultyInfo) AddInfo();
+
+    //     // hide ukmd info if any of the other buttons are hovered over
+    //     foreach (var button in buttons.Values) {
+    //         var trigger = button.GetComponent<EventTrigger>();
+    //         if (!trigger) continue;
+
+    //         trigger.triggers.Add(
+    //             CreateTriggerEntry(EventTriggerType.PointerEnter, _ => difficultyInfo.SetActive(false))
+    //         );
+    //     }
+
+    //     // add new triggers to ukmd button
+    //     buttonTrigger.triggers.AddRange([
+    //         CreateTriggerEntry(EventTriggerType.PointerEnter, _ =>
+    //         {
+    //             difficultyInfo.SetActive(true);
+    //             foreach (var info in infos.Values) info.SetActive(false);
+    //         }),
+
+    //         CreateTriggerEntry(EventTriggerType.PointerExit,  _ => difficultyInfo.SetActive(false)),
+    //         CreateTriggerEntry(EventTriggerType.PointerClick, eventData =>
+    //         {
+    //             PrefsManager.Instance.SetInt("difficulty", DifficultyHelper.Savage.difficulty);
+    //             difficultyInfo.SetActive(false);
+    //         }),
+    //     ]);
+
+    //     // add button to the button activation sequence
+    //     var activationSequence = interactables.GetComponent<ObjectActivateInSequence>();
+    //     activationSequence.objectsToActivate = activationSequence.objectsToActivate.AddItem(difficultyButton).ToArray();
+
+    //     logger.LogInfo("Added difficulty button");
+    // }
+
+    // void AddInfo()
+    // {
+    //     logger.LogInfo("Adding difficulty Info...");
+
+    //     difficultyInfo = Instantiate(interactables.Find("Brutal Info").gameObject, interactables);
+    //     difficultyInfo.name = $"{DifficultyHelper.Savage.name} Info";
+
+    //     var difficultyTitle = difficultyInfo.transform.Find("Title (1)").GetComponent<TMP_Text>();
+
+    //     difficultyTitle.text = $"--{DifficultyHelper.Savage.name}--";
+
+    //     // set the description of difficulty
+    //     // difficultyInfo.transform.Find("Text").GetComponent<TMP_Text>().text = 
+    //     ;
+
+    //     logger.LogInfo($"Added difficulty Info");
+    // }
 }
